@@ -163,8 +163,8 @@ public class City extends JComponent implements MouseMotionListener
 
     public void paint(Graphics g) {
 	Graphics2D g2 = (Graphics2D)g;
-	g2.drawImage(imageField, 0, 0, this);
-	g2.drawImage(image, imageX, imageY, this);
+	g2.drawImage(i_2, 0, 0, this);
+	g2.drawImage(i_1, i_x, i_y, this);
     }
 
     
