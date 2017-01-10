@@ -9,15 +9,32 @@ import java.net.URL;
 public class City extends JComponent implements MouseMotionListener
 {
     int i_x, i_y;
+    Image i_1, i_2;
     JFrame frame;
 
     public static void main(String[] args)
     {
-	City c = new City();	
+	String background = "/images/Base_Grass.png";
+	String person = "/images/child_f.gif";
+	
+	Image image = Toolkit.getDefaultToolkit().getImage(City.class.getResource(person));
+	image = image.getScaledInstance(500, 500, Image.SCALE_DEFAULT);
+	Image image_2 = Toolkit.getDefaultToolkit().getImage(City.class.getResource(background));
+
+
+	JFrame frame = new JFrame("Everton");
+	frame.add( new City(image, image_2) );
+	frame.setSize(500, 500);
+	frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+	frame.setVisible(true);
+	
     }
 
-    public City()
+    public City(Image _i, Image _i_2)
     {
+	i_1 = _i;
+	i_2 = _i_2;
+	
 	init();
 	
 	addMouseMotionListener(this);
@@ -29,12 +46,13 @@ public class City extends JComponent implements MouseMotionListener
 
     private void init()
     {
+	/*
 	frame = new JFrame();
 	frame.setBounds(100, 100, 300, 300);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	frame.setLayout(new FlowLayout());
-
+	*/
 
 	try
 	    {
@@ -47,19 +65,7 @@ public class City extends JComponent implements MouseMotionListener
 		ImageIcon icon = new ImageIcon(img);
 		//JButton b = new JButton(icon);
 		//frame.add(b);
-		frame.add(new JButton(icon), BorderLayout.CENTER);
-
-		URL imgurl_op = getClass().getResource("/images/police_out.gif");
-		Image img_op = t.getImage(imgurl_op);
-		//	img = img.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-	
-		ImageIcon ic = new ImageIcon(img_op);
-		//	b = new JButton(ic);
-		
-		frame.add(new JButton(ic), BorderLayout.NORTH);
-		
-		
-		
+		frame.add(new JButton(icon), BorderLayout.CENTER);		
 	    }
 	catch(Exception e) {;}
 
@@ -156,19 +162,10 @@ public class City extends JComponent implements MouseMotionListener
     public void mouseMoved(MouseEvent ev) {}
 
     public void paint(Graphics g) {
-	//   Graphics2D g2 = (Graphics2D)g;
-	//g2.drawImage(imageField, 0, 0, this);
-	//g2.drawImage(image, imageX, imageY, this);
+	Graphics2D g2 = (Graphics2D)g;
+	g2.drawImage(imageField, 0, 0, this);
+	g2.drawImage(image, imageX, imageY, this);
     }
 
-
-
-
-    /*
-    private void do_stuff()
-    {
-	System.out.println("In display");
-    }
-    */
     
 }
