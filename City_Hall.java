@@ -1,4 +1,4 @@
- /**
+/**
   * City_Hall class that inherits from Building.
   */
 import java.util.ArrayList;
