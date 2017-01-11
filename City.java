@@ -5,35 +5,44 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * This is a city class that will model police, teachers, and children in City halls and School.
+ * This is a city class that will model police, teachers, and children in City halls and School. Will display graphics that will allow the user to see information about buildings, and people. Will be able to drag and drop the people.
  */
-public class City extends JComponent implements MouseMotionListener
+public class City extends JComponent implements MouseMotionListener, MouseListener
 {
     /**
 	 * 
 	 */
-	int i_x, i_y;
-    Image i_1, i_3;
+	int i_x = 0, i_y = 0;
+   // Image i_1, i_3;
     JFrame frame;
     ArrayList<String> outside = new ArrayList<String>();
+    JLabel kid;
+    JLabel teacher;
+    JLabel police;
+    JLabel city_hall;
+    JLabel school;
+    boolean drag = false;
 
-
+/** 
+ * Creates a city.
+ */
     public static void main(String[] args)
     {
     	City c = new City();	
     }
 
+/** 
+ * Calls init.
+ */
     public City()
     {
-    	display();
+    	init();
    	}
 
-    private void init(Image _i, Image _i_2)
-    {    	
-   i_1 = _i;
-   i_3 = _i_2;
-
-    frame = new JFrame("Everton");
+    
+    private void init()
+    {
+    frame = new JFrame("City of Everton");
    	frame.getContentPane().setBackground(new Color(26, 124, 58));
    	frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
   	frame.setSize(500, 500);
@@ -42,67 +51,67 @@ public class City extends JComponent implements MouseMotionListener
 	System.out.println("Welcome to the city of Everton!\n");
 
 	show_city();
-	addMouseMotionListener(this);
+	frame.setVisible(true);
     }
-
+   
     
-    
-    
-    
+     /** 
+     * Sets the location that the person is being dragged to and repaints as they are dragged.
+     */  
+        
     public void mouseDragged(MouseEvent ev)
     {
-	i_x = ev.getX();
-	i_y = ev.getY();
-	repaint(); //USE ELFE IF FOR DRAGGING
-	
-	
-	
+    	
+    	if(drag == true)
+    	{
+    		JComponent j = (JComponent)ev.getSource();
+    		j.setLocation(j.getX()+ev.getX(), j.getY()+ev.getY());
+    		repaint();
+    	}
+		
     }
 
     
-    
-    
-    
-    
-
-    public void mouseMoved(MouseEvent ev) {}
-
-    public void paint(Graphics g) {
-	Graphics2D g2 = (Graphics2D)g;
-	g2.drawImage(i_3, i_x, i_y, this);
-	g2.drawImage(i_1, i_x, i_y, this);
-    }
-    
-    
-    
-    
-    
-    
-    
-    private void display()
+    /** 
+     * Sets drag to false
+     */  
+        
+    public void mouseReleased(MouseEvent ev)
     {
-    	String person = "/images/child_m.gif";
-    	String police_i = "/images/police_in_building_1.gif";
-    	    	   	
-    	Image image = Toolkit.getDefaultToolkit().getImage(City.class.getResource(person));
-    	image = image.getScaledInstance(85, 85, Image.SCALE_DEFAULT);
-    	    	    	
-    	    	    	
-    	Image image_3 = Toolkit.getDefaultToolkit().getImage(City.class.getResource(police_i));
-    	image_3 = image_3.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
-    		
-    	init(image, image_3);
-    		
-    	frame.setVisible(true);
-    		
+    	drag = false;
+    }
+    
+    /** 
+     * Sets drag to true depending on the source of the click
+     */  
+        
+    public void mousePressed(MouseEvent ev)
+    {
+    	if(ev.getSource() == police)
+    	{
+    		drag = true;
+    	}
+    	else if(ev.getSource() == teacher)
+    	{
+    		drag = true;
+    	}
+    	
+    	else if(ev.getSource() == kid)
+    	{
+    		drag = true;
+    	}
     	
     }
     
- 
     
-    	
-    	
-    private void show_city()
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
+    public void mouseMoved(MouseEvent ev) {}
+    public void paint(Graphics g) {}
+    
+    
+     private void show_city()
     {
     	Police p = new Police("Steve Ericson", 37, "124-9765");
         p.setRole(Police.PoliceRole.Patrol);
@@ -130,7 +139,7 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(85, 85, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JLabel kid = new JLabel(icon);
+    	kid = new JLabel(icon);
     	JButton b = new JButton("Info");
     	b.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
@@ -153,7 +162,7 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JLabel teacher = new JLabel(icon);
+    	teacher = new JLabel(icon);
     	JButton bt = new JButton("Info");    	
     	bt.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
@@ -180,7 +189,7 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JLabel police = new JLabel(icon);
+    	police = new JLabel(icon);
     	JButton bto = new JButton("Info");
     	
   	bto.addActionListener(new ActionListener() {
@@ -206,7 +215,7 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JLabel city_hall = new JLabel(icon);
+    	city_hall = new JLabel(icon);
     	JButton bton = new JButton("Info");
     	
 	bton.addActionListener(new ActionListener() {
@@ -231,7 +240,7 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JLabel school = new JLabel(icon);
+    	school = new JLabel(icon);
     	JButton bt = new JButton("Info");
     	
    	bt.addActionListener(new ActionListener() {
@@ -251,7 +260,7 @@ public class City extends JComponent implements MouseMotionListener
     	JButton button = new JButton("Outside");
     	
     	frame.add(button);
-    	
+    	System.out.println("");
        	button.addActionListener(new ActionListener() {
                   public void actionPerformed(ActionEvent ae) {
                 	  for(String holder : outside)
@@ -260,8 +269,16 @@ public class City extends JComponent implements MouseMotionListener
         	});  
    
    
-       	addMouseMotionListener(this);
-    
+       police.addMouseListener(this);
+       police.addMouseMotionListener(this);
+       
+       teacher.addMouseListener(this);
+       teacher.addMouseMotionListener(this);
+       
+       kid.addMouseListener(this);
+       kid.addMouseMotionListener(this);
+    	 
+      
    
     
     
