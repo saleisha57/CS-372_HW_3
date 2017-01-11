@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * This is a city class that will model police, teachers, and children in City halls and School.
@@ -14,6 +15,8 @@ public class City extends JComponent implements MouseMotionListener
 	int i_x, i_y;
     Image i_1, i_3;
     JFrame frame;
+    ArrayList<String> outside = new ArrayList<String>();
+
 
     public static void main(String[] args)
     {
@@ -39,10 +42,9 @@ public class City extends JComponent implements MouseMotionListener
 	System.out.println("Welcome to the city of Everton!\n");
 
 	show_city();
+	addMouseMotionListener(this);
     }
 
-    
-    
     
     
     
@@ -52,6 +54,9 @@ public class City extends JComponent implements MouseMotionListener
 	i_x = ev.getX();
 	i_y = ev.getY();
 	repaint(); //USE ELFE IF FOR DRAGGING
+	
+	
+	
     }
 
     
@@ -90,7 +95,7 @@ public class City extends JComponent implements MouseMotionListener
     		
     	frame.setVisible(true);
     		
-    	addMouseMotionListener(this);
+    	
     }
     
  
@@ -101,22 +106,20 @@ public class City extends JComponent implements MouseMotionListener
     {
     	Police p = new Police("Steve Ericson", 37, "124-9765");
         p.setRole(Police.PoliceRole.Patrol);
-
-
-
-    	Teacher te = new Teacher("Samantha Johnson", 28, "328-6475");
+        
+        Teacher te = new Teacher("Samantha Johnson", 28, "328-6475");
     	te.setCert(Teacher.TeacherCert.Math);      	
 
     	Kid k = new Kid("Faith Law", 10, "235-9876", "Candy Corn");
 
     	City_Hall ch = new City_Hall("City Hall", "612 N Drive dr");
-    	School sc = new School("Everton Elementary", "254 W Arrow st");
-    	
-    	ch.show_people();
-       	
-    	sc.show_people();
+    	School sc = new School("Everton Elementary", "254 W Arrow st");	
     	
     	
+    	outside.add(p.get_name());
+    	outside.add(te.get_name());
+    	outside.add(k.get_name());
+    	    	
     	
     	try
         {
@@ -127,21 +130,17 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(85, 85, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JButton b = new JButton(icon);
-    	b.setBorderPainted(false);
-    	b.setContentAreaFilled(false);
-    	b.setFocusPainted(false);
-    	b.setOpaque(false);
-    	
+    	JLabel kid = new JLabel(icon);
+    	JButton b = new JButton("Info");
     	b.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
-          		System.out.println("\n" + k.get_name() + ": is " + k.get_age() + " years old and has a phone number of " 
+          		System.out.println("\n" + k.get_name() + " is " + k.get_age() + " years old and has a phone number of " 
           				   + k.get_phone() + ". Favorite candy is: " + k.get_fav_candy());
-          		sc.add_to_array(k.get_name());
-                }
+          		 }
               });
     	
-    	frame.add(b);
+    	frame.add(kid);
+    	frame.getContentPane().add(b);
         }
     catch(Exception e) {;}	
     	
@@ -154,12 +153,8 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JButton bt = new JButton(icon);
-    	bt.setBorderPainted(false);
-    	bt.setContentAreaFilled(false);
-    	bt.setFocusPainted(false);
-    	bt.setOpaque(false);
-    	
+    	JLabel teacher = new JLabel(icon);
+    	JButton bt = new JButton("Info");    	
     	bt.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
             	  System.out.println("\nGrade " + te.getGrade() + " " + te.getCert() + " teacher: " + te.get_name() + " is " 
@@ -167,15 +162,13 @@ public class City extends JComponent implements MouseMotionListener
        				   + te.get_phone() + ". Employee ID number: " + te.get_id());
        		te.give_money(10.25);
        		System.out.println(te.get_name() + " makes $" + te.show_money() + " an hour.");
-       		sc.add_to_array(te.get_name());
-                }
+       		   }
     	});
               
-    	
-    	frame.add(bt);
+    	frame.add(teacher);
+    	frame.getContentPane().add(bt);
         }
-    catch(Exception e) {;}
-    	
+    catch(Exception e) {;}    	
     	
     	
     	
@@ -187,24 +180,20 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JButton bto = new JButton(icon);
-    	bto.setBorderPainted(false);
-    	bto.setContentAreaFilled(false);
-    	bto.setFocusPainted(false);
-    	bto.setOpaque(false);
+    	JLabel police = new JLabel(icon);
+    	JButton bto = new JButton("Info");
     	
-    	bto.addActionListener(new ActionListener() {
+  	bto.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
             	  System.out.println("\n" + p.getRole() + ": " + p.get_name() + " is " + p.get_age() + 
        				   " years old and has a phone number of " + p.get_phone() + ". Employee ID number: " + p.get_id());
        		p.give_money(15.25);
        		System.out.println(p.get_name() + " makes $" + p.show_money() + " an hour.");
-       		ch.add_to_array(p.get_name());
-                }
+       		   }
     	});
               
-    	
-    	frame.add(bto);
+    	frame.add(police);
+    	frame.getContentPane().add(bto);
         }
     catch(Exception e) {;}
     	
@@ -217,20 +206,18 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JButton bton = new JButton(icon);
-    	bton.setBorderPainted(false);
-    	bton.setContentAreaFilled(false);
-    	bton.setFocusPainted(false);
-    	bton.setOpaque(false);
+    	JLabel city_hall = new JLabel(icon);
+    	JButton bton = new JButton("Info");
     	
-    	bton.addActionListener(new ActionListener() {
+	bton.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
-            	  System.out.println("\n" + ch.get_name() + " at " + ch.get_address() + ".");
+            	  System.out.println("\n" + ch.get_name() + " at " + ch.get_address() + ". \nIn building: ");
+            	  ch.show_people();
                 }
     	});
               
-    	
-    	frame.add(bton);
+    	frame.add(city_hall);
+    	frame.getContentPane().add(bton);
         }
     catch(Exception e) {;}
     	
@@ -244,28 +231,41 @@ public class City extends JComponent implements MouseMotionListener
     	img = img.getScaledInstance(100, 100, Image.SCALE_DEFAULT);
 
     	ImageIcon icon = new ImageIcon(img);
-    	JButton bt = new JButton(icon);
-    	bt.setBorderPainted(false);
-    	bt.setContentAreaFilled(false);
-    	bt.setFocusPainted(false);
-    	bt.setOpaque(false);
+    	JLabel school = new JLabel(icon);
+    	JButton bt = new JButton("Info");
     	
-    	bt.addActionListener(new ActionListener() {
+   	bt.addActionListener(new ActionListener() {
               public void actionPerformed(ActionEvent ae) {
-            	  System.out.println("\n" + sc.get_name() + " at " + sc.get_address() + ".");
+            	  System.out.println("\n" + sc.get_name() + " at " + sc.get_address() + ". \nIn building: ");
+            	  sc.show_people();
                 }
     	});
               
-    	
-    	frame.add(bt);
+    	frame.add(school);
+    	frame.getContentPane().add(bt);
         }
     catch(Exception e) {;}
-    }
+   
+ 
+   
+    	JButton button = new JButton("Outside");
+    	
+    	frame.add(button);
+    	
+       	button.addActionListener(new ActionListener() {
+                  public void actionPerformed(ActionEvent ae) {
+                	  for(String holder : outside)
+                		    System.out.println("Outside: " + holder);
+                    }
+        	});  
+   
+   
+       	addMouseMotionListener(this);
+    
    
     
     
-    
-    
+    }
     
     
 

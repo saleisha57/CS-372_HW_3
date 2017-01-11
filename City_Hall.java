@@ -26,6 +26,13 @@ public class City_Hall extends Building
     {
 	current_occ.add(nm);
     }
+    
+    
+    public void remove_from_array(String nm)
+    {
+	current_occ.remove(nm);
+    }
+    
 
     /**
      * Returns the name.
