@@ -278,9 +278,42 @@ public class City extends JComponent implements MouseMotionListener, MouseListen
        kid.addMouseListener(this);
        kid.addMouseMotionListener(this);
     	 
-      
-   
-    
+       if(police.getX() ==  city_hall.getX() && police.getY() == city_hall.getY())
+       {
+    	   ch.add_to_array(p.get_name());
+    	   outside.remove(p.get_name());
+       }
+       else
+       {
+    	   ch.remove_from_array(p.get_name());
+    	   outside.add(p.get_name());
+       }
+       
+       if(teacher.getX() ==  school.getX() && teacher.getY() == school.getY())
+       {
+    	   sc.add_to_array(te.get_name());
+    	   outside.remove(te.get_name());
+       }
+       else
+       {
+    	   ch.remove_from_array(te.get_name());
+    	   outside.add(te.get_name());
+       }
+       
+       
+       if(kid.getX() ==  school.getX() && kid.getY() == school.getY())
+       {
+    	   sc.add_to_array(k.get_name());
+    	   outside.remove(k.get_name());
+       }
+       else
+       {
+    	   ch.remove_from_array(k.get_name());
+    	   outside.add(k.get_name());
+       }
+       
+       
+       
     
     }
     
